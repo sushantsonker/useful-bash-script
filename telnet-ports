@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [[ $# -ne 1 ]]; then
+ echo " $0 Required filename with list of hosts and ports"
+exit 1
+fi
+
+serverlist=$1
+OUT=status.log
+rm $OUT > /dev/null 2>&1
+while IFS=, read hostname portnumber
+do
+        echo -e "\n\n======================================================================================\n\n"
+        echo Working on $hostname
+        echo "Checking $hostname on Port $portnumber"
+        curl $hostname:$portnumber --verbose >> $OUT
+        echo -e "\n\n======================================================================================\n\n"
+done < $serverlist
