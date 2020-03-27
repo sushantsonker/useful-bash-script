@@ -12,7 +12,7 @@ while IFS=, read hostname portnumber
 do
         echo -e "\n\n======================================================================================\n\n"
         echo Working on $hostname
-        echo "Checking $hostname on Port $portnumber"
-        curl $hostname:$portnumber --verbose >> $OUT
+        echo "Checking $hostname on Port $portnumber" >> $OUT 2>&1
+        nc -vz $hostname:$portnumber >> $OUT 2>&1
         echo -e "\n\n======================================================================================\n\n"
 done < $serverlist
