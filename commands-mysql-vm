@@ -15,8 +15,16 @@ mysqladmin -u root -p version
 
 #Login to mysql and grant privileges
 mysql -u root -p
-grant all privileges on *.* to 'root'@'%' identified by 'your-password'
+grant all privileges on *.* to 'root'@'%' identified by 'your-password';
 
 # Resstart mysql
 sudo systemctl stop mysqld
 sudo systemctl start mysqld
+
+# To connect from another host
+mysql -u root -p -h 10.23.205.81 -P 3306
+
+# To change root password
+UPDATE mysql.user SET authentication_string=PASSWORD('Welcome1234!') WHERE user='root';
+FLUSH PRIVILEGES;
+grant all privileges on *.* to 'root'@'%' identified by 'Welcome1234!';
