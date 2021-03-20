@@ -1,10 +1,12 @@
-# Prompt to confirm if files tigera-operator.yaml(in current directory), tigera-prometheus-operator.yaml(in current directory), /root/.docker/config.json, custom-resources-cni-only.yaml, custom-resources-cni-aks-only.yaml,  are present
+Prompt if this is an AKS/EKS/AWS-IAAS/Azure-IAAS/On-prem Cluster
+If non-AKS
+# Check if files below are present tigera-operator.yaml(in current directory), tigera-prometheus-operator.yaml(in current directory), ~/.docker/config.json, custom-resources-cni-only.yaml  are present
+If AKS
+# Check if files below are present tigera-operator.yaml(in current directory), tigera-prometheus-operator.yaml(in current directory), ~/.docker/config.json, custom-resources-cni-aks-only.yaml,  are present
 kubectl create -f tigera-operator.yaml
 kubectl create -f tigera-prometheus-operator.yaml
-kubectl create secret generic tigera-pull-secret --from-file=.dockerconfigjson=/root/.docker/config.json --type=kubernetes.io/dockerconfigjson -n tigera-operator
+kubectl create secret generic tigera-pull-secret --from-file=.dockerconfigjson=~/.docker/config.json --type=kubernetes.io/dockerconfigjson -n tigera-operator
 
-
-Prompt if this is an AKS/EKS/AWS-IAAS/Azure-IAAS/On-prem Cluster
 # For non-aks clusters, run
 kubectl create -f custom-resources-cni-only.yaml
 # For aks clusters, run
@@ -14,10 +16,9 @@ watch kubectl get tigerastatus
 # Prompt if portworx is installed. If not exit.
 # Create storage class
 Check if tigera-elasticsearch sc is present and attribute is set to retain
-If not, delete existing tigera-elasticsearch sc and recreate with kubectl create elasticsearch-storage.yaml
-
+If not, warn and then delete existing tigera-elasticsearch sc and recreate with 
 kubectl create -f elasticsearch-storage-sc-portworx.yaml
-# # Update custom-resource(separate for aks & non-aks clusters) calico enterprise.yaml
+
 # For non-aks clusters, run
 kubectl create -f custom-resources-enterprise-only.yaml
 # For aks clusters, run
