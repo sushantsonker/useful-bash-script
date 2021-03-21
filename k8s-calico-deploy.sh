@@ -12,6 +12,11 @@ kubectl create -f custom-resources-cni-only.yaml
 # For aks clusters, run
 kubectl create -f custom-resources-cni-aks-only.yaml
 watch kubectl get tigerastatus
+kubectl get tigerastatus
+NAME                  AVAILABLE   PROGRESSING   DEGRADED   SINCE
+apiserver             True        False         False      3d11h
+calico                True        False         False      3d11h
+
 # Wait until the apiserver shows a status of Available
 # Prompt if portworx is installed. If not exit.
 # Create storage class
@@ -26,6 +31,16 @@ kubectl create -f custom-resources-enterprise-aks-only.yaml
 kubectl create -f license.yaml
 watch kubectl get tigerastatus
 # Wait until all the components shows a status of Available
+ kubectl get tigerastatus
+NAME                  AVAILABLE   PROGRESSING   DEGRADED   SINCE
+apiserver             True        False         False      3d11h
+calico                True        False         False      3d11h
+compliance            True        False         False      3d11h
+intrusion-detection   True        False         False      3d11h
+log-collector         True        False         False      3d11h
+log-storage           True        False         False      3d11h
+manager               True        False         False      3d11h
+
 kubectl create -f tigera-policies.yaml
 Prompt for log collector hostname or IP
 # Enable fluentd logs
